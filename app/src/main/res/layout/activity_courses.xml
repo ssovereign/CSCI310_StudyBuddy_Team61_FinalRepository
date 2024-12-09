@@ -16,40 +16,22 @@
         android:layout_gravity="center_horizontal"
         android:paddingBottom="16dp" />
 
-    <!-- List of Courses -->
-    <TextView
-        android:id="@+id/course1"
+    <!-- ListView for dynamically displaying enrolled courses -->
+    <ListView
+        android:id="@+id/coursesListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Course 1"
-        android:padding="8dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginBottom="8dp" />
-
-    <TextView
-        android:id="@+id/course2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Course 2"
-        android:padding="8dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginBottom="8dp" />
-
-    <TextView
-        android:id="@+id/course3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Course 3"
-        android:padding="8dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="1dp" />
 
     <!-- Buttons at the Bottom -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:gravity="center"
+        android:paddingTop="16dp">
 
         <Button
             android:id="@+id/homeScreenButton"

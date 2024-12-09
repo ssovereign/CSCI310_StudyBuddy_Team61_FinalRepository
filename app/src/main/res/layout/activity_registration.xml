@@ -40,6 +40,13 @@
         android:paddingBottom="16dp" />
 
     <Button
+        android:id="@+id/courseSelectionButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Courses"
+        android:layout_marginBottom="8dp" />
+
+    <Button
         android:id="@+id/registerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

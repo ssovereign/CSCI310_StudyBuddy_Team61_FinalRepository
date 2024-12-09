@@ -2,12 +2,9 @@ package com.example.csci310_studybuddy_team61_finalrepository;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.*;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,12 +12,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegistrationActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firestore;
+
+    private List<String> selectedCourses = new ArrayList<>(); // Stores selected courses
+    private boolean[] selectedItems; // Tracks selected states
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,62 +33,84 @@ public class RegistrationActivity extends AppCompatActivity {
         EditText confirmPasswordField = findViewById(R.id.confirmPasswordField);
         Button registerButton = findViewById(R.id.registerButton);
         Button loginButton = findViewById(R.id.loginButton);
+        Button courseSelectionButton = findViewById(R.id.courseSelectionButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
 
+        // List of available courses
+        String[] courses = {"Math 101", "CS 201", "Physics 202"};
+        selectedItems = new boolean[courses.length]; // Track which courses are selected
+
+        // Handle course selection button click
+        courseSelectionButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Select Courses");
+
+            builder.setMultiChoiceItems(courses, selectedItems, (dialog, which, isChecked) -> {
+                if (isChecked) {
+                    // Add course if selected
+                    if (!selectedCourses.contains(courses[which])) {
+                        selectedCourses.add(courses[which]);
+                    }
+                } else {
+                    // Remove course if deselected
+                    selectedCourses.remove(courses[which]);
+                }
+            });
+
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                Toast.makeText(this, "Courses Selected: " + selectedCourses, Toast.LENGTH_SHORT).show();
+            });
+
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+
         // Handle registration
         registerButton.setOnClickListener(v -> {
-            String username = usernameField.getText().toString().trim();
-            String password = passwordField.getText().toString().trim();
-            String confirmPassword = confirmPasswordField.getText().toString().trim();
+            String username = usernameField.getText().toString();
+            String password = passwordField.getText().toString();
+            String confirmPassword = confirmPasswordField.getText().toString();
 
             if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
-                Toast.makeText(RegistrationActivity.this, "All fields are required!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "All fields are required!", Toast.LENGTH_SHORT).show();
             } else if (!password.equals(confirmPassword)) {
-                Toast.makeText(RegistrationActivity.this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Passwords do not match!", Toast.LENGTH_SHORT).show();
             } else {
                 // Register user with Firebase Auth
                 firebaseAuth.createUserWithEmailAndPassword(username, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
-                                Log.d("RegistrationActivity", "Registration successful. Firebase UID: " + firebaseAuth.getCurrentUser().getUid());
-
                                 // Add user data to Firestore
                                 Map<String, Object> user = new HashMap<>();
                                 user.put("email", username);
-                                user.put("courses", new ArrayList<String>()); // Use an empty ArrayList
+                                user.put("courses", selectedCourses); // Save selected courses
 
                                 firestore.collection("users")
                                         .document(firebaseAuth.getCurrentUser().getUid())
                                         .set(user)
                                         .addOnCompleteListener(task1 -> {
                                             if (task1.isSuccessful()) {
-                                                Log.d("RegistrationActivity", "User data saved to Firestore. Redirecting to LoginActivity...");
-                                                Toast.makeText(RegistrationActivity.this, "Registration Successful! Redirecting to login...", Toast.LENGTH_SHORT).show();
-
-                                                // Delay and navigate to LoginActivity
-                                                new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                                                    Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                                                    startActivity(intent);
-                                                    finish(); // Close RegistrationActivity
-                                                }, 2000);
+                                                Toast.makeText(this, "Registration Successful! Redirecting to login...", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(this, LoginActivity.class));
+                                                finish();
                                             } else {
-                                                Toast.makeText(RegistrationActivity.this, "Failed to save user data!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(this, "Failed to save user data!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             } else {
-                                Log.e("RegistrationActivity", "FirebaseAuth registration failed: " + task.getException().getMessage());
-                                Toast.makeText(RegistrationActivity.this, "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Registration Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
             }
         });
 
-        // Navigate back to login screen
+        // Navigate to Login screen
         loginButton.setOnClickListener(v -> {
-            Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, LoginActivity.class));
             finish();
         });
     }
