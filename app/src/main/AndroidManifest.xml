@@ -27,6 +27,7 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".GroupsActivity" />
         <activity android:name=".CourseHomeActivity" />
+        <activity android:name=".CreateGroup" />
     </application>
 
 </manifest>
