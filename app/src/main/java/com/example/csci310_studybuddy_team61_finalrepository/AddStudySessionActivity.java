@@ -8,7 +8,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,12 +22,22 @@ public class AddStudySessionActivity extends AppCompatActivity {
     private EditText titleField, dateField, startTimeField, endTimeField, locationField;
     private Button addMembersButton, confirmButton;
 
+    private String groupId; // To store the group ID passed from the previous activity
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_study_session);
 
         firestore = FirebaseFirestore.getInstance();
+
+        // Retrieve group ID from intent
+        groupId = getIntent().getStringExtra("GROUP_NAME");
+        if (groupId == null || groupId.isEmpty()) {
+            Toast.makeText(this, "Group ID not found!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         // Initialize UI elements
         titleField = findViewById(R.id.sessionTitleField);
@@ -50,8 +59,6 @@ public class AddStudySessionActivity extends AppCompatActivity {
     }
 
     private void fetchGroupMembers() {
-        String groupId = getIntent().getStringExtra("groupId"); // Group ID passed from the previous activity
-
         firestore.collection("groups")
                 .document(groupId)
                 .get()
@@ -111,26 +118,37 @@ public class AddStudySessionActivity extends AppCompatActivity {
             return;
         }
 
-        // Ensure start time and end time are valid
+        // Validate time ranges and start-end consistency
         try {
-            int startHour = Integer.parseInt(startTime.split(":")[0]);
-            int startMinute = Integer.parseInt(startTime.split(":")[1]);
-            int endHour = Integer.parseInt(endTime.split(":")[0]);
-            int endMinute = Integer.parseInt(endTime.split(":")[1]);
+            String[] startSplit = startTime.split(":");
+            String[] endSplit = endTime.split(":");
 
+            int startHour = Integer.parseInt(startSplit[0]);
+            int startMinute = Integer.parseInt(startSplit[1]);
+            int endHour = Integer.parseInt(endSplit[0]);
+            int endMinute = Integer.parseInt(endSplit[1]);
+
+            // Check if the time values are valid (24-hour format)
             if (startHour < 0 || startHour > 23 || startMinute < 0 || startMinute > 59 ||
                     endHour < 0 || endHour > 23 || endMinute < 0 || endMinute > 59) {
-                Toast.makeText(this, "Time values must be valid 24-hour format!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Invalid time values! Ensure times are in 24-hour format.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Check if end time is after start time
+            // Ensure the end time is after the start time
             if (endHour < startHour || (endHour == startHour && endMinute <= startMinute)) {
                 Toast.makeText(this, "End time must be after start time!", Toast.LENGTH_SHORT).show();
                 return;
             }
+
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Invalid time format!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate location (optional: add custom logic)
+        if (location.length() < 3) {
+            Toast.makeText(this, "Location must be at least 3 characters long!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -142,7 +160,9 @@ public class AddStudySessionActivity extends AppCompatActivity {
         sessionData.put("end_time", endTime);
         sessionData.put("location", location);
         sessionData.put("members", selectedMembers);
+        sessionData.put("group_id", groupId); // Add the group ID to the session data
 
+        // Save to Firestore
         firestore.collection("study_sessions")
                 .add(sessionData)
                 .addOnSuccessListener(documentReference -> {

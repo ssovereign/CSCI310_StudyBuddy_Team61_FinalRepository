@@ -43,6 +43,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:21.3.0'
     implementation 'com.google.firebase:firebase-storage'
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
+    implementation 'com.google.android.gms:play-services-base:18.5.0'
+    implementation 'com.google.android.gms:play-services-auth:21.2.0' // Example Play services
+
 
 
 }

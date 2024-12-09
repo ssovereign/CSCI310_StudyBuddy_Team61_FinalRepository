@@ -16,7 +16,7 @@ import java.util.List;
 
 public class CourseHomeActivity extends AppCompatActivity {
 
-    private static final String TAG = "GroupDetailsActivity";
+    private static final String TAG = "CourseHomeActivity";
     private FirebaseFirestore firebaseFirestore;
 
     private LinearLayout memberListContainer;
@@ -27,13 +27,18 @@ public class CourseHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_coursehome);
 
         Button chatBoxButton = findViewById(R.id.chatBoxButton);
+        Button groupCalendarButton = findViewById(R.id.groupCalendarButton);
+        Button addNewSessionButton = findViewById(R.id.addNewSessionButton);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         memberListContainer = findViewById(R.id.memberListContainer);
 
         String groupName = getIntent().getStringExtra("GroupName");
+
         chatBoxButton.setOnClickListener(v -> openChatPage(groupName));
+        groupCalendarButton.setOnClickListener(v -> openGroupCalendar(groupName));
+        addNewSessionButton.setOnClickListener(v -> openAddNewSessionPage(groupName));
 
         if (groupName != null) {
             loadGroupMembers(groupName);
@@ -103,6 +108,18 @@ public class CourseHomeActivity extends AppCompatActivity {
     private void openChatPage(String groupName) {
         Intent intent = new Intent(CourseHomeActivity.this, ChatSetupActivity.class);
         intent.putExtra("GROUP_NAME", groupName); // Pass the group name to ChatPageActivity
+        startActivity(intent);
+    }
+
+    private void openGroupCalendar(String groupName) {
+        Intent intent = new Intent(CourseHomeActivity.this, GroupCalendarActivity.class);
+        intent.putExtra("GROUP_NAME", groupName); // Pass the group name to GroupCalendarActivity
+        startActivity(intent);
+    }
+
+    private void openAddNewSessionPage(String groupName) {
+        Intent intent = new Intent(CourseHomeActivity.this, AddStudySessionActivity.class);
+        intent.putExtra("GROUP_NAME", groupName); // Pass the group name to AddNewSessionActivity
         startActivity(intent);
     }
 }

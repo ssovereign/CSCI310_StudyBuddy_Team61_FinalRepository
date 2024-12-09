@@ -22,8 +22,8 @@ public class StudySessionDetailsActivity extends AppCompatActivity {
         // Display session details
         String details = "Title: " + sessionDetails.get("title") + "\n" +
                 "Location: " + sessionDetails.get("location") + "\n" +
-                "Start Time: " + sessionDetails.get("startTime") + "\n" +
-                "End Time: " + sessionDetails.get("endTime") + "\n" +
+                "Start Time: " + sessionDetails.get("start_time") + "\n" +
+                "End Time: " + sessionDetails.get("end_time") + "\n" +
                 "Members: " + sessionDetails.get("members");
         detailsTextView.setText(details);
     }
