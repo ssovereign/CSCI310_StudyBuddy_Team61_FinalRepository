@@ -31,10 +31,10 @@ public class GroupsActivity extends AppCompatActivity {
         // Initialize Firebase and UI components
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
-
         groupsContainer = findViewById(R.id.groupsContainer);
 
         Button addGroupButton = findViewById(R.id.addGroupButton);
+        Button backButton = findViewById(R.id.backButton); // Initialize Back Button
 
         // Load groups initially
         loadGroups();
@@ -43,7 +43,11 @@ public class GroupsActivity extends AppCompatActivity {
             Intent intent = new Intent(GroupsActivity.this, CreateGroup.class);
             startActivity(intent);
         });
+
+        // Handle back button click
+        backButton.setOnClickListener(v -> finish()); // Close the activity and return to the previous screen
     }
+
 
     /**
      * Function to load all groups from Firestore and add rows.

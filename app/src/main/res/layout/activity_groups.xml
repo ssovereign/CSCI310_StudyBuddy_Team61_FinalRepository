@@ -7,12 +7,22 @@
     android:padding="16dp"
     android:background="@android:color/white">
 
+    <!-- Top Bar with Back Button, Title, and Add Group Button -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingBottom="8dp">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/holo_purple"
+            android:text="Back"
+            android:textColor="@android:color/white"
+            android:padding="8dp" />
 
         <TextView
             android:id="@+id/groupsTitle"
@@ -37,6 +47,7 @@
             android:contentDescription="Add Group" />
     </LinearLayout>
 
+    <!-- Scrollable List of Groups -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,7 +58,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
         </LinearLayout>
     </ScrollView>

@@ -44,21 +44,23 @@ public class CoursesActivity extends AppCompatActivity {
         // Fetch and display the user's enrolled courses
         fetchEnrolledCourses();
 
+        // Navigate to the Home Screen
         homeScreenButton.setOnClickListener(v -> {
-            // Navigate to the Home Screen
             Intent intent = new Intent(CoursesActivity.this, HomeActivity.class);
             startActivity(intent);
         });
 
         // Logout and return to Login Screen
         logoutButton.setOnClickListener(v -> {
-            // Clear Firebase session and navigate to login
             firebaseAuth.signOut();
             Intent intent = new Intent(CoursesActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
         });
+
+        // Handle back button click
     }
+
 
     private void fetchEnrolledCourses() {
         String userId = firebaseAuth.getCurrentUser().getUid();

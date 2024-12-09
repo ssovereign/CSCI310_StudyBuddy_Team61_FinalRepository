@@ -36,11 +36,7 @@
         <activity android:name=".ChatSetupActivity" />
         <activity android:name=".GroupChatActivity" />
         <activity android:name=".PrivateChatActivity" />
-        <activity android:name=".GroupCalendarActivity" />
-        <activity android:name=".StudySessionDetailsActivity" />
-        <activity android:name=".StudySessionsActivity" />
         <activity android:name=".AddStudySessionActivity" />
-        <activity android:name=".ResourcesActivity" />
 
 
 

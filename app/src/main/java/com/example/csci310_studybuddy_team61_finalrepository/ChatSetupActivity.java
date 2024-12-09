@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class ChatSetupActivity extends AppCompatActivity {
 
-    private static final String TAG = "ChatPageActivity";
+    private static final String TAG = "ChatSetupActivity";
 
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth firebaseAuth;
@@ -47,8 +48,13 @@ public class ChatSetupActivity extends AppCompatActivity {
 
         // Initialize UI components
         chatListContainer = findViewById(R.id.chatListContainer);
-
         Button groupChatButton = findViewById(R.id.groupChatButton);
+
+        // Set up the Back button
+        TextView backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> finish()); // Close the current activity and return to the previous screen
+
+        // Group Chat Button Listener
         groupChatButton.setOnClickListener(v -> openGroupChat());
 
         // Load and display chats
@@ -70,13 +76,18 @@ public class ChatSetupActivity extends AppCompatActivity {
                                 initializeChatButtons(members);
                             } else {
                                 Log.e(TAG, "No members found for group: " + groupName);
+                                Toast.makeText(this, "No members found in the group.", Toast.LENGTH_SHORT).show();
                             }
                         });
                     } else {
                         Log.e(TAG, "Group not found: " + groupName);
+                        Toast.makeText(this, "Group not found.", Toast.LENGTH_SHORT).show();
                     }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Error fetching group members: ", e));
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Error fetching group members: ", e);
+                    Toast.makeText(this, "Failed to load group members.", Toast.LENGTH_SHORT).show();
+                });
     }
 
     /**

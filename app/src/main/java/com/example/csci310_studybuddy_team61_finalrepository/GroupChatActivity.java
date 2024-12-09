@@ -48,6 +48,10 @@ public class GroupChatActivity extends AppCompatActivity {
         messageInput = findViewById(R.id.messageInput);
         ImageButton sendButton = findViewById(R.id.sendButton);
 
+        // Back Button
+        TextView backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(v -> finish()); // Close the current activity and go back
+
         loadGroupMessages();
 
         sendButton.setOnClickListener(v -> sendMessage());
@@ -76,12 +80,6 @@ public class GroupChatActivity extends AppCompatActivity {
      * @param sender The sender's email.
      * @param text   The message text.
      */
-    /**
-     * Add a message to the UI.
-     *
-     * @param sender The sender's email.
-     * @param text   The message text.
-     */
     private void addMessageToUI(String sender, String text) {
         TextView messageTextView = new TextView(this);
         messageTextView.setText(sender + ": " + text);
@@ -92,7 +90,6 @@ public class GroupChatActivity extends AppCompatActivity {
         messageTextView.setPadding(8, 8, 8, 8);
         messagesContainer.addView(messageTextView);
     }
-
 
     /**
      * Send a message to the group.
