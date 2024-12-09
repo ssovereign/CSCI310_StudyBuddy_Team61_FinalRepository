@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/addStudySessionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Study Session"
+            android:textSize="24sp"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="16dp" />
+
+        <EditText
+            android:id="@+id/sessionTitleField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/sessionDateField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/sessionStartTimeField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Start Time"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/sessionEndTimeField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="End Time"
+            android:paddingBottom="8dp" />
+
+        <EditText
+            android:id="@+id/sessionLocationField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location"
+            android:paddingBottom="16dp" />
+
+        <Button
+            android:id="@+id/addMembersButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Members"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/confirmAddSessionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm" />
+    </LinearLayout>
+</ScrollView>

@@ -27,7 +27,13 @@
         <activity android:name=".HomeActivity" />
         <activity android:name=".GroupsActivity" />
         <activity android:name=".CourseHomeActivity" />
+        <activity android:name=".GroupCalendarActivity" />
+        <activity android:name=".StudySessionsActivity" />
+        <activity android:name=".ResourcesActivity" />
+        <activity android:name=".StudySessionDetailsActivity" />
         <activity android:name=".CreateGroup" />
+
+
     </application>
 
 </manifest>

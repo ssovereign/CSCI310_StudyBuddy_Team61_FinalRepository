@@ -7,6 +7,7 @@
     android:padding="16dp"
     android:background="@android:color/white">
 
+    <!-- Member List Title -->
     <TextView
         android:id="@+id/memberListTitle"
         android:layout_width="match_parent"
@@ -23,6 +24,7 @@
         android:layout_height="1dp"
         android:background="@android:color/black" />
 
+    <!-- Placeholder for Content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -32,6 +34,7 @@
         android:background="@android:color/white">
     </LinearLayout>
 
+    <!-- Bottom Navigation Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Adding New Sessions"
+            android:text="Add New Sessions"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@android:color/white"
