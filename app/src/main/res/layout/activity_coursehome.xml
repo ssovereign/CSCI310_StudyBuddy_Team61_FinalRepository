@@ -24,15 +24,20 @@
         android:layout_height="1dp"
         android:background="@android:color/black" />
 
-    <!-- Placeholder for Content -->
-    <LinearLayout
+    <!-- Scrollable Member List -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:gravity="center"
         android:background="@android:color/white">
-    </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/memberListContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp" />
+    </ScrollView>
 
     <!-- Bottom Navigation Buttons -->
     <LinearLayout

@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -101,17 +99,23 @@ public class GroupsActivity extends AppCompatActivity {
         groupRow.setGravity(Gravity.CENTER_VERTICAL);
         groupRow.setPadding(16, 16, 16, 16);
 
-        // Add a TextView for the group name
-        TextView groupNameTextView = new TextView(this);
-        groupNameTextView.setLayoutParams(new LinearLayout.LayoutParams(
+        // Create a Button for the group name
+        Button groupButton = new Button(this);
+        groupButton.setLayoutParams(new LinearLayout.LayoutParams(
                 0,
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 1 // Weight to fill available space
         ));
-        groupNameTextView.setText(groupName);
-        groupNameTextView.setTextSize(16);
-        groupNameTextView.setPadding(8, 8, 8, 8);
-        groupRow.addView(groupNameTextView);
+        groupButton.setText(groupName);
+        groupButton.setTextSize(16);
+        groupButton.setPadding(8, 8, 8, 8);
+        groupButton.setBackgroundResource(android.R.color.transparent); // Optional: Transparent background
+        groupButton.setOnClickListener(v -> {
+            String groupNameFromButton = ((Button) v).getText().toString();
+            openGroupDetails(groupNameFromButton);
+        });
+
+        groupRow.addView(groupButton);
 
         // Optionally add a Join button
         if (showJoinButton) {
@@ -130,6 +134,17 @@ public class GroupsActivity extends AppCompatActivity {
 
         // Log the row addition
         Log.d(TAG, "Added row for group: " + groupName);
+    }
+
+    /**
+     * Opens the details page for the selected group.
+     *
+     * @param groupName The name of the group to open
+     */
+    private void openGroupDetails(String groupName) {
+        Intent intent = new Intent(GroupsActivity.this, CourseHomeActivity.class);
+        intent.putExtra("GroupName", groupName);
+        startActivity(intent);
     }
 
     /**

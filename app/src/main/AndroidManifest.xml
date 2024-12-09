@@ -32,8 +32,9 @@
         <activity android:name=".ResourcesActivity" />
         <activity android:name=".StudySessionDetailsActivity" />
         <activity android:name=".CreateGroup" />
-
-
+        <activity android:name=".ChatSetupActivity" />
+        <activity android:name=".GroupChatActivity" />
+        <activity android:name=".PrivateChatActivity" />
     </application>
 
 </manifest>
