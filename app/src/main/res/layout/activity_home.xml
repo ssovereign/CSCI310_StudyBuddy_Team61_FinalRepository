@@ -3,14 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal">
 
-    <!-- Placeholder text for Home Screen -->
     <TextView
+        android:id="@+id/nameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Home Screen"
-        android:textSize="24sp"
-        android:layout_gravity="center" />
+        android:textSize="18sp"
+        android:background="@drawable/oval_shape"
+        android:padding="8dp"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/myGroupsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="My groups"
+        android:textSize="18sp"
+        android:background="@drawable/rounded_button"
+        android:padding="16dp"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log out"
+        android:textSize="18sp"
+        android:background="@drawable/rounded_button"
+        android:padding="12dp" />
+
 </LinearLayout>
